@@ -58,9 +58,9 @@ class TarefaApplicationServiceTest {
         UUID idUsuario = usuario.getIdUsuario();
         when(usuarioRepository.buscaUsuarioPorEmail(any())).thenReturn(usuario);
         when(usuarioRepository.buscaUsuarioPorId(any())).thenReturn(usuario);
-        when(tarefaRepository.buscaTarefaPorId(any())).thenReturn(tarefas);
+        when(tarefaRepository.buscaTarefasDoUsuario(any())).thenReturn(tarefas);
         tarefaApplicationService.deletaTodasSuasTarefas(emailUsuario, idUsuario);
-        verify(tarefaRepository, times(1)).deletaTodasSuasTarefas()
+        verify(tarefaRepository, times(1)).deletaTodasSuasTarefas(tarefas);
     }
 
 
