@@ -31,7 +31,11 @@ public class TarefaListResponse {
         this.contagemPomodoro = tarefa.getContagemPomodoro();
     }
 
-    public static List<TarefaListResponse> converter(List<Tarefa> tarefas) {
+    public static List<TarefaListResponse> converter(List<Tarefa> tarefas){
+        return tarefas.stream().map(TarefaListResponse::new).collect(Collectors.toList());
+    }
+
+    public static List<TarefaListResponse> converte(List<Tarefa> tarefas) {
         return tarefas.stream()
                 .map(TarefaListResponse::new)
                 .collect(Collectors.toList());

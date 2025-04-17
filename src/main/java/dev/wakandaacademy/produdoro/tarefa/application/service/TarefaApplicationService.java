@@ -44,13 +44,13 @@ public class TarefaApplicationService implements TarefaService {
     }
 
     @Override
-    public List<TarefaListResponse> buscarTodasTarefas(String usuario, UUID idUsuario) {
-        log.info("[inicia] TarefaApplicationService - buscarTodasTarefas");
+    public List<TarefaListResponse> buscarTodasAsTarefas(String usuario, UUID idUsuario) {
+        log.info("[inicia] TarefaApplicationService - buscaTodasTarefas");
         Usuario usuarioPorEmail = usuarioRepository.buscaUsuarioPorEmail(usuario);
         usuarioRepository.buscaUsuarioPorId(idUsuario);
         usuarioPorEmail.validaUsuario(idUsuario);
-        List<Tarefa> tarefas = tarefaRepository.buscarTodasTarefasPorIdUsuario(idUsuario);
-        log.info("[finaliza] TarefaApplicationService - buscarTodasTarefas");
-        return TarefaListResponse.converter(tarefas);
+        List<Tarefa> tarefas = tarefaRepository.buscaTarefasDoUsuario(idUsuario);
+        log.info("[finaliza] TarefaApplicationService - buscaTodasTarefas");
+        return TarefaListResponse.converte(tarefas);
     }
 }
