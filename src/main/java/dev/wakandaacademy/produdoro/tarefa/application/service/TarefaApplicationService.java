@@ -44,6 +44,26 @@ public class TarefaApplicationService implements TarefaService {
     }
 
     @Override
+    public void deletaTodasSuasTarefas(String usuarioEmail, UUID idUsuario) {
+        log.info("[inicia] TarefaApplicationService - deletaTodasSuasTarefas");
+        Usuario usuarioId = usuarioRepository.buscaUsuarioPorId(idUsuario);
+        validaUsuario(usuarioEmail, idUsuario);
+        List<Tarefa> tarefas = tarefaRepository.buscaTarefasDoUsuario(usuarioId.getIdUsuario());
+        if (tarefas.isEmpty()) {
+            throw APIException.build(HttpStatus.CONFLICT, "Usuário não possui tarefa(as) cadastrada(as)");
+        }
+        tarefaRepository.deletaTodasSuasTarefas(tarefas);
+        log.info("[finaliza] TarefaApplicationService - deletaTodasSuasTarefas");
+    }
+
+    private void validaUsuario(String usuarioEmail, UUID idUsuario) {
+        log.info("[inicia] TarefaApplicationService - validaUsuario");
+        Usuario usuarioPorEmail = usuarioRepository.buscaUsuarioPorEmail(usuarioEmail);
+        usuarioPorEmail.validaIdUsuario(idUsuario);
+        log.info("[finaliza] TarefaApplicationService - validaUsuario");
+    }
+
+    @Override
     public List<TarefaListResponse> buscarTodasAsTarefas(String usuario, UUID idUsuario) {
         log.info("[inicia] TarefaApplicationService - buscaTodasTarefas");
         Usuario usuarioPorEmail = usuarioRepository.buscaUsuarioPorEmail(usuario);
