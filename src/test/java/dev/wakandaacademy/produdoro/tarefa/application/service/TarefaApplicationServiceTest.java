@@ -79,6 +79,6 @@ class TarefaApplicationServiceTest {
         when(tarefaRepository.buscaTarefaPorId(idTarefaInvalida)).thenReturn(Optional.empty());
         assertThrows(APIException.class,
                 () -> tarefaApplicationService.editaTarefa(usuario, idTarefaInvalida, tarefaAlteracaoRequest));
-        verify(tarefaRepository, times(1)).buscaTarefaPorId(idTarefaInvalida);
+        Optional<Tarefa> tarefa = verify(tarefaRepository, times(1)).buscaTarefaPorId(idTarefaInvalida);
     }
 }
