@@ -51,6 +51,19 @@ class TarefaApplicationServiceTest {
         assertEquals(UUID.class, response.getIdTarefa().getClass());
     }
 
+    @Test
+    void deveDeletarTodasTarefas() {
+        Usuario usuario = DataHelper.createUsuario();
+        List<Tarefa> tarefas = DataHelper.createListTarefa();
+        String emailUsuario = usuario.getEmail();
+        UUID idUsuario = usuario.getIdUsuario();
+        when(usuarioRepository.buscaUsuarioPorEmail(any())).thenReturn(usuario);
+        when(usuarioRepository.buscaUsuarioPorId(any())).thenReturn(usuario);
+        when(tarefaRepository.buscaTarefasDoUsuario(any())).thenReturn(tarefas);
+        tarefaApplicationService.deletaTodasSuasTarefas(emailUsuario, idUsuario);
+        verify(tarefaRepository, times(1)).deletaTodasSuasTarefas(tarefas);
+    }
+
 
 
     public TarefaRequest getTarefaRequest() {
