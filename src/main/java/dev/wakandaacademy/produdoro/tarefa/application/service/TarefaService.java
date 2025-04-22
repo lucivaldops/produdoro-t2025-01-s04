@@ -11,6 +11,10 @@ import java.util.UUID;
 public interface TarefaService {
     TarefaIdResponse criaNovaTarefa(TarefaRequest tarefaRequest);
     Tarefa detalhaTarefa(String usuario, UUID idTarefa);
+<feat/prod-432-usuario-edita-tarefa
     void editaTarefa(String email, UUID idTarefa, TarefaAlteracaoRequest tarefaAlteracaoRequest);
+
+    void deletaTodasSuasTarefas(String usuarioEmail, UUID idUsuario);
+
     List<TarefaListResponse> buscarTodasAsTarefas(String usuario, UUID idUsuario);
 }

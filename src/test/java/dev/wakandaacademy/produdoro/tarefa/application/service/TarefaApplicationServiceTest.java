@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import dev.wakandaacademy.produdoro.DataHelper;
+feat/prod-432-usuario-edita-tarefa
 import dev.wakandaacademy.produdoro.handler.APIException;
 import dev.wakandaacademy.produdoro.tarefa.application.api.TarefaAlteracaoRequest;
 import dev.wakandaacademy.produdoro.usuario.application.repository.UsuarioRepository;
@@ -49,6 +50,19 @@ class TarefaApplicationServiceTest {
         assertNotNull(response);
         assertEquals(TarefaIdResponse.class, response.getClass());
         assertEquals(UUID.class, response.getIdTarefa().getClass());
+    }
+
+    @Test
+    void deveDeletarTodasTarefas() {
+        Usuario usuario = DataHelper.createUsuario();
+        List<Tarefa> tarefas = DataHelper.createListTarefa();
+        String emailUsuario = usuario.getEmail();
+        UUID idUsuario = usuario.getIdUsuario();
+        when(usuarioRepository.buscaUsuarioPorEmail(any())).thenReturn(usuario);
+        when(usuarioRepository.buscaUsuarioPorId(any())).thenReturn(usuario);
+        when(tarefaRepository.buscaTarefasDoUsuario(any())).thenReturn(tarefas);
+        tarefaApplicationService.deletaTodasSuasTarefas(emailUsuario, idUsuario);
+        verify(tarefaRepository, times(1)).deletaTodasSuasTarefas(tarefas);
     }
 
 
